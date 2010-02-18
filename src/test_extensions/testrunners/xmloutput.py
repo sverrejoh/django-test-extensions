@@ -6,7 +6,8 @@ from xmlunit.unittest import _WritelnDecorator, XmlTextTestRunner as his_XmlText
 from django.test.simple import *
 from django.utils.html import escape
 
-def run_tests(test_labels, verbosity=1, interactive=True, extra_tests=[]):
+def run_tests(test_labels, verbosity=1, interactive=True, failfast=False,
+              extra_tests=[]):
     setup_test_environment()
 
     settings.DEBUG = False

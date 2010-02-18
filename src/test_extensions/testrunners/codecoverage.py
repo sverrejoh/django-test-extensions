@@ -64,7 +64,7 @@ def get_all_coverage_modules(app_module):
 
     return mod_list
 
-def run_tests(test_labels, verbosity=1, interactive=True,
+def run_tests(test_labels, verbosity=1, interactive=True, failfast=False,
         extra_tests=[], nodatabase=False):
     """
     Test runner which displays a code coverage report at the end of the
@@ -77,12 +77,12 @@ def run_tests(test_labels, verbosity=1, interactive=True,
     cov.start()
     if nodatabase:
         results = nodatabase_run_tests(test_labels, verbosity, interactive,
-            extra_tests)
+                                       failfast, extra_tests)
     else:
         from django.db import connection
         connection.creation.destroy_test_db = lambda *a, **k: None
         results = django_test_runner(test_labels, verbosity, interactive,
-            extra_tests)
+                                     failfast, extra_tests)
     cov.stop()
 
     coverage_modules = []

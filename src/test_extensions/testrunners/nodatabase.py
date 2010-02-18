@@ -13,7 +13,8 @@ from django.test.simple import *
 
 import coverage
 
-def run_tests(test_labels, verbosity=1, interactive=True, extra_tests=[]):
+def run_tests(test_labels, verbosity=1, interactive=True, failfast=False,
+              extra_tests=[]):
     """
     Run the unit tests for all the test labels in the provided list.
     Labels must be of the form:
@@ -47,6 +48,9 @@ def run_tests(test_labels, verbosity=1, interactive=True, extra_tests=[]):
             else:
                 app = get_app(label)
                 suite.addTest(build_suite(app))
+    # Use settings if defined
+    elif settings.TEST_APPS:
+        test_labels = settings.TEST_APPS
     # ...otherwise use all installed
     else:
         for app in get_apps():
@@ -71,7 +75,8 @@ def run_tests(test_labels, verbosity=1, interactive=True, extra_tests=[]):
 
     return len(result.failures) + len(result.errors)
 
-def run_tests_with_coverage(test_labels, verbosity=1, interactive=True, extra_tests=[]):
+def run_tests_with_coverage(test_labels, verbosity=1, interactive=True,
+                            failfast=False, extra_tests=[]):
     """
     Run the unit tests for all the test labels in the provided list.
     Labels must be of the form:
