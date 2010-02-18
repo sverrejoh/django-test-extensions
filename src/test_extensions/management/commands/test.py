@@ -49,7 +49,8 @@ class Command(BaseCommand):
 
         verbosity = int(options.get('verbosity', 1))
         interactive = options.get('interactive', True)
-
+        failfast = options.get('failfast', False)
+        
         # it's quite possible someone, lets say South, might have stolen
         # the syncdb command from django. For testing purposes we should
         # probably put it back. Migrations don't really make sense
